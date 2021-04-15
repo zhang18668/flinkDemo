@@ -6,15 +6,15 @@ import java.lang.Boolean
 
 import hdpf.bean.Device
 
-case class Message(
-                    var vhost: String,
-                    var name: String,
-                    var payload:String
-                  )
+case class Payload(
+                        var version: String,
+                        var time: String,
+                        var device_data: Array[Device]
+                      )
 
-object Message {
-  def apply(json: String): Message = {
-    JSON.parseObject[Message](json, classOf[Message])
+object Payload {
+  def apply(json: String): Payload = {
+    JSON.parseObject[Payload](json, classOf[Payload])
   }
 
   def main(args: Array[String]): Unit = {
