@@ -25,7 +25,7 @@ object BatchFromFile {
       */
     def isInPloyin(p: Point, pts: List[Point]) = {
       var intersectionp = 0
-      for (i <- 0 until pts.size) {
+      for (i <- pts.indices) {
 
         val p1 = pts(i)
         val p2 = pts((i + 1) % pts.size)
@@ -37,15 +37,16 @@ object BatchFromFile {
       intersectionp % 2
     }
 
-
     // 打印
     val mesSet = textDataSet.map {
       tex =>
         val list = List(Point(114.0717, 30.44909), Point(114.0717, 30.44910), Point(114.0722, 30.44909), Point(114.0722, 30.44910))
-        var set = Set[String]()
+
         var message: Message = Message(tex)
         var payload: Payload = Payload(message.payload)
         var devices: Array[Device] = payload.device_data
+        var set = scala.collection.mutable.Set[String]()
+
         for (dev <- devices) {
           var objects: Array[Participant] = dev.`object`
           for (obj <- objects) {
@@ -62,6 +63,7 @@ object BatchFromFile {
           set
        }
     }
+//    println("set"+set.toArray.length)
     //    mesSet.map(_ =>_.device_data)
     mesSet.collect()
 
